@@ -106,10 +106,7 @@ this.addCover=function cover(oDiv){
 
 
 this.runInTo=function(oDiv1,oDiv2){
-	
-	
-	
-	
+
 	oDiv1.addEventListener("mousedown",function(ev){
 		
     		var oEvent=ev||event;
@@ -153,57 +150,37 @@ this.runInTo=function(oDiv1,oDiv2){
 
 }
 
-//screenTool
-var ClassScreenTool = function () {
-    //get the min between width and height
-    this.getMin = function () {
-        var sreenWidth = window.screen.width;
-        var screenHeight = window.screen.height;
-        var screenMin = sreenWidth < screenHeight ? sreenWidth : screenHeight;
-        return screenMin;
-    }
-    this.getNowWidth = function () {
-        var winWidth = 0;
-        var winHeight = 0;
-        // 获取窗口宽度
-        if (window.innerWidth)
-            winWidth = window.innerWidth;
-        else if ((document.body) && (document.body.clientWidth))
-            winWidth = document.body.clientWidth;
-        // 获取窗口高度
-        if (window.innerHeight)
-            winHeight = window.innerHeight;
-        else if ((document.body) && (document.body.clientHeight))
-            winHeight = document.body.clientHeight;
+var ClassScreenTool = function() {
+    this.getNowWidth = function() {
 
-        // 通过深入Document内部对body进行检测，获取窗口大小
-        if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth) {
-            winHeight = document.documentElement.clientHeight;
+        var winWidth = 0;
+
+        if (window.innerWidth) {
+            winWidth = window.innerWidth;
+        } else if ((document.body) && (document.body.clientWidth)) {
+            winWidth = document.body.clientWidth;
+        }
+
+
+
+        if (document.documentElement && document.documentElement.clientWidth) {
             winWidth = document.documentElement.clientWidth;
         }
-        // 结果输出至两个文本框
         return winWidth;
     }
-    this.getNowHeight = function () {
-        var winWidth = 0;
-        var winHeight = 0;
-        // 获取窗口宽度
-        if (window.innerWidth)
-            winWidth = window.innerWidth;
-        else if ((document.body) && (document.body.clientWidth))
-            winWidth = document.body.clientWidth;
-        // 获取窗口高度
-        if (window.innerHeight)
-            winHeight = window.innerHeight;
-        else if ((document.body) && (document.body.clientHeight))
-            winHeight = document.body.clientHeight;
+    this.getNowHeight = function() {
 
-        // 通过深入Document内部对body进行检测，获取窗口大小
-        if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth) {
-            winHeight = document.documentElement.clientHeight;
-            winWidth = document.documentElement.clientWidth;
+        var winHeight = 0;
+
+        if (window.innerHeight) {
+            winHeight = window.innerHeight;
+        } else if ((document.body) && (document.body.clientHeight)) {
+            winHeight = document.body.clientHeight;
         }
-        // 返回值
+
+        if (document.documentElement && document.documentElement.clientHeight) {
+            winHeight = document.documentElement.clientHeight;
+        }
         return winHeight;
     }
 }
