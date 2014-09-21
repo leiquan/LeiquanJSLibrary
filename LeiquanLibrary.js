@@ -101,7 +101,7 @@ var ClassOperatingTool = function() {
 	}
 
 
-	this.addCover = function cover(oDiv) {
+	this.addCover = function(oDiv) {
 		var width = oDiv.offsetWidth;
 		var height = oDiv.offsetHeight;
 
