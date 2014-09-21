@@ -8,8 +8,8 @@
 	<body>
 <script>
 	var requireTool = new ClassRequireTool();
-	requireTool.require("test1", function test1() {
-		alert("require");
+	requireTool.require("test1", function test1(test1) {
+		test1.say();
 	});
 </script>
 
