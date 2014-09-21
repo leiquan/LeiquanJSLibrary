@@ -5,7 +5,37 @@
 //Class RequireTool
 var ClassRequireTool = function() {
 	this.require = function(sPath, fnCallback) {
-//ajax得到代码，插入代码，那怎么解决依赖问题呢？
+		//ajax得到代码，插入代码，那怎么解决依赖问题呢？加载完毕后就可以执行fnCallback了不是吗？
+		//格式约定
+		//若是通过<script>来加载，那么就能立即执行，只需要指定回掉函数就行。
+		//思路:
+		//1 首先载入代码，这个代码需要遵循jsonP格式，格式定义：被require的代码必须写在回掉函数的参数内
+		//2 代码载入后，就会自动运行calaback，以此来实现依赖注入
+		
+		var script=document.createElement("script");
+		if(sPath){//这里判断下结尾是不是.js，不是的就自动加上，先不写
+			
+			//首先添加执行回掉
+			var callbackFunctionScript=document.createElement("script");
+			
+			//callbackFunctionScript.innerHTML+="function "+sPath+"(){";
+			//要在这里去掉匿名函数fnCallback的首位才可以正常运行
+			//正则表达式替换
+			//var re=/^function()/;
+			
+			//alert(fnCallback.toString());
+			
+			callbackFunctionScript.innerHTML+=fnCallback;
+			
+			//callbackFunctionScript.innerHTML+="}";
+			
+			document.body.appendChild(callbackFunctionScript);
+			
+			script.src=sPath+".js";
+			document.body.appendChild(script);
+			
+		}
+
 	}
 }
 
