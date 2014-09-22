@@ -235,8 +235,21 @@ var ClassGeolocationTool = function() {
 	}
 }
 
+//pictureViewer
+var ClassPictureViewerTool = function() {
+	this.view = function(pictureFile, imgElement) {
+		//通过file.size可以取得图片大小
+		var reader = new FileReader();
+		reader.readAsDataURL(pictureFile);
+		reader.onload = function(evt) {
+			imgElement.src = evt.target.result;
+		}
+
+	}
+}
+
 //webCamera
-var ClassWebCamera = function(sVideoElementId, sCanvasElementId, sButtonElementId) {
+var ClassWebCameraTool = function(sVideoElementId, sCanvasElementId, sButtonElementId) {
 	var video = document.getElementById(sVideoElementId);
 	//video config
 	var videoConfig = {
@@ -274,8 +287,9 @@ var ClassWebCamera = function(sVideoElementId, sCanvasElementId, sButtonElementI
 	}
 }
 
+
 //widget
-var ClassWidget = function() {
+var ClassWidgetTool = function() {
 	this.toast = function(text, time) {
 		var toast = document.createElement("div");
 		toast.style.width = window.screen.width / 2 + "px";
@@ -300,7 +314,7 @@ var ClassWidget = function() {
 }
 
 //ajax
-var ClassAJAX = function() {
+var ClassAJAXTool = function() {
 	this.get = function(sUrl, fnSucceed, fnFaild) {
 		//1.创建AJAX对象
 		var oAjax = null;
@@ -470,7 +484,7 @@ var ClassMathTool = function() {
 }
 
 //storage
-var ClassStorage = function() {
+var ClassStorageTool = function() {
 	var storage = window.localStorage;
 	if (storage) {
 		console.log('This browser supports localStorage');
@@ -511,7 +525,7 @@ var ClassStorage = function() {
 }
 
 //indexedDB
-var ClassIndexedDb = function(sDBName, iVersion) {
+var ClassIndexedDbTool = function(sDBName, iVersion) {
 	var db;
 	var ta;
 	if ("indexedDB" in window) {
