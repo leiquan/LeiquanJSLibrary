@@ -75,6 +75,7 @@ var ClassOperatingTool = function() {
 	this.setDrag = function(oDiv) {
 		oDiv.addEventListener("mousedown", function(ev) {
 			var oEvent = ev || event;
+			//偏移量
 			var disX = oEvent.clientX - oDiv.offsetLeft;
 			var disY = oEvent.clientY - oDiv.offsetTop;
 
