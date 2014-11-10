@@ -1,6 +1,59 @@
-﻿//This library is built by Leiquan during learning and working.
+//This library is built by Leiquan during learning and working.
 
 //You Should Use These Method After Create A New Object By These Classes!
+
+var ClassPainter = function(canvasId) {
+
+				this.context = document.getElementById(canvasId).getContext("2d");
+
+				this.sector = function(x, y, radius, sDeg, eDeg, color) {
+
+					var sDeg = Math.PI / 180 * sDeg;
+					var eDeg = Math.PI / 180 * eDeg;
+
+					// 保存
+					this.context.save();
+
+					// 位移到目标点.
+					this.context.translate(x, y);
+					this.context.beginPath();
+
+					// 画出圆弧
+					this.context.arc(0, 0, radius, sDeg, eDeg);
+
+					// 再次保存以备旋转
+					this.context.save();
+
+					// 旋转至起始角度
+					this.context.rotate(eDeg);
+
+					// 移动到终点，准备连接终点与圆心
+					this.context.moveTo(radius, 0);
+
+					// 连接到圆心
+					this.context.lineTo(0, 0);
+
+					// 还原
+					this.context.restore();
+
+					// 旋转至起点角度
+					this.context.rotate(sDeg);
+
+					// 从圆心连接到起点
+					this.context.lineTo(radius, 0);
+					this.context.closePath();
+
+					// 还原到最初保存的状态
+					this.context.restore();
+
+					this.context.fillStyle = color;
+					this.context.fill();
+				}
+
+
+
+
+			}
 
 //Class RequireTool
 var ClassRequireTool = function() {
