@@ -2,6 +2,62 @@
 
 //You Should Use These Method After Create A New Object By These Classes!
 
+
+//ClassDialogBase
+var ClassDialogBase = function() {
+
+	var self = this;
+
+	this.dialog = document.createElement("div");
+	this.dialog.style.width = "300px";
+	this.dialog.style.height = "200px";
+	this.dialog.style.backgroundColor = "red";
+	this.dialog.style.position = "absolute";
+	//this.dialog.style.left=window.
+
+	this.show = function() {
+		document.body.appendChild(this.dialog);
+	}
+
+}
+
+//ClassDialogPrompt
+var ClassDialogPrompt = function() {
+
+	var self = this;
+
+	this.temp = ClassDialogBase;
+	this.temp();
+	delete this.temp;
+
+
+
+	this.trueBtn = document.createElement("input");
+	this.trueBtn.type = "button";
+	this.trueBtn.value = "Yes";
+
+	this.falseBtn = document.createElement("input");
+	this.falseBtn.type = "button";
+	this.falseBtn.value = "No";
+
+	this.dialog.appendChild(this.trueBtn);
+	this.dialog.appendChild(this.falseBtn);
+
+	this.tureCallback = function(tureCallback) {
+		self.trueBtn.addEventListener("click", function() {
+			tureCallback();
+		}, false);
+	}
+
+	this.falseCallback = function(falseCallback) {
+		self.falseBtn.addEventListener("click", function() {
+			falseCallback();
+		}, false);
+	}
+
+}
+
+
 var ClassPainter = function(canvasId) {
 
 				this.context = document.getElementById(canvasId).getContext("2d");
