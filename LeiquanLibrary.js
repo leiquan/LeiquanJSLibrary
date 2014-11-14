@@ -8,17 +8,21 @@ var ClassDialogBase = function() {
 
 	var self = this;
 
-	this.dialog = document.createElement("div");
-	this.dialog.style.width ="350px";
-	this.dialog.style.height = "200px";
-	this.dialog.style.backgroundColor = "#DDD";
-	this.dialog.style.borderRadius = "10px";
-	this.dialog.style.position = "absolute";
-	this.dialog.style.zIndex = "100";
-	this.dialog.style.left=(new ClassScreenTool().getNowWidth()-350)/2+"px";
+	this.dialogBase = document.createElement("div");
+	this.dialogBase.style.width ="350px";
+	this.dialogBase.style.height = "200px";
+	this.dialogBase.style.backgroundColor = "#DDD";
+	this.dialogBase.style.borderRadius = "10px";
+	this.dialogBase.style.position = "absolute";
+	this.dialogBase.style.zIndex = "100";
+	this.dialogBase.style.left=(new ClassScreenTool().getNowWidth()-350)/2+"px";
 
 	this.show = function() {
-		document.body.appendChild(this.dialog);
+		document.body.appendChild(this.dialogBase);
+	}
+	
+	this.hide = function() {
+		document.body.removeChild(this.dialogBase);
 	}
 
 }
@@ -39,17 +43,27 @@ var ClassDialogPrompt = function() {
 	this.trueBtn.value = "Yes";
 	this.trueBtn.style.width ="100px";
 	this.trueBtn.style.height = "50px";
-	this.dialog.style.backgroundColor = "#CCC";
-	this.dialog.style.borderRadius = "5px";
-	this.dialog.style.position = "absolute";
-	this.dialog.style.left=(new ClassScreenTool().getNowWidth()-350)/2+"px";
+	this.trueBtn.style.border ="none";
+	this.trueBtn.style.backgroundColor = "#CCC";
+	this.trueBtn.style.borderRadius = "5px";
+	this.trueBtn.style.position = "absolute";
+	this.trueBtn.style.left="50px";
+	this.trueBtn.style.top="140px";
 
 	this.falseBtn = document.createElement("input");
 	this.falseBtn.type = "button";
 	this.falseBtn.value = "No";
+	this.falseBtn.style.width ="100px";
+	this.falseBtn.style.border ="none";
+	this.falseBtn.style.height = "50px";
+	this.falseBtn.style.backgroundColor = "#CCC";
+	this.falseBtn.style.borderRadius = "5px";
+	this.falseBtn.style.position = "absolute";
+	this.falseBtn.style.left="200px";
+	this.falseBtn.style.top="140px";
 
-	this.dialog.appendChild(this.trueBtn);
-	this.dialog.appendChild(this.falseBtn);
+	this.dialogBase.appendChild(this.trueBtn);
+	this.dialogBase.appendChild(this.falseBtn);
 
 	this.tureCallback = function(tureCallback) {
 		self.trueBtn.addEventListener("click", function() {
@@ -65,6 +79,28 @@ var ClassDialogPrompt = function() {
 
 }
 
+var ClassDialogFile=function(){
+	
+	var self = this;
+
+	this.temp = ClassDialogPrompt;
+	this.temp();
+	delete this.temp;
+	
+	this.fileInput = document.createElement("input");
+	this.fileInput.type = "file";
+	this.fileInput.style.width ="300px";
+	this.fileInput.style.height = "50px";
+	this.fileInput.style.backgroundColor = "#CCC";
+	this.fileInput.style.position = "absolute";
+	this.fileInput.style.left="25px";
+	this.fileInput.style.top="50px";
+	
+	this.dialogBase.appendChild(this.fileInput);
+	
+	
+	
+}
 
 var ClassPainter = function(canvasId) {
 
