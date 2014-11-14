@@ -9,11 +9,13 @@ var ClassDialogBase = function() {
 	var self = this;
 
 	this.dialog = document.createElement("div");
-	this.dialog.style.width = "300px";
+	this.dialog.style.width ="350px";
 	this.dialog.style.height = "200px";
-	this.dialog.style.backgroundColor = "red";
+	this.dialog.style.backgroundColor = "#DDD";
+	this.dialog.style.borderRadius = "10px";
 	this.dialog.style.position = "absolute";
-	//this.dialog.style.left=window.
+	this.dialog.style.zIndex = "100";
+	this.dialog.style.left=(new ClassScreenTool().getNowWidth()-350)/2+"px";
 
 	this.show = function() {
 		document.body.appendChild(this.dialog);
@@ -35,6 +37,12 @@ var ClassDialogPrompt = function() {
 	this.trueBtn = document.createElement("input");
 	this.trueBtn.type = "button";
 	this.trueBtn.value = "Yes";
+	this.trueBtn.style.width ="100px";
+	this.trueBtn.style.height = "50px";
+	this.dialog.style.backgroundColor = "#CCC";
+	this.dialog.style.borderRadius = "5px";
+	this.dialog.style.position = "absolute";
+	this.dialog.style.left=(new ClassScreenTool().getNowWidth()-350)/2+"px";
 
 	this.falseBtn = document.createElement("input");
 	this.falseBtn.type = "button";
