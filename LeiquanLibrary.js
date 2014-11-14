@@ -90,11 +90,11 @@ var ClassDialogFile=function(){
 	this.fileInput = document.createElement("input");
 	this.fileInput.type = "file";
 	this.fileInput.style.width ="300px";
-	this.fileInput.style.height = "50px";
+	this.fileInput.style.height = "30px";
 	this.fileInput.style.backgroundColor = "#CCC";
 	this.fileInput.style.position = "absolute";
 	this.fileInput.style.left="25px";
-	this.fileInput.style.top="50px";
+	this.fileInput.style.top="60px";
 	
 	this.dialogBase.appendChild(this.fileInput);
 	
