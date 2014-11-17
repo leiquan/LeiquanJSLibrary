@@ -2,6 +2,147 @@
 
 //You Should Use These Method After Create A New Object By These Classes!
 
+//ClassSwitchTool
+var ClassSwitchTool = function(oDiv, aImgUrls) {
+
+	var self = this;
+
+	this.oDiv = oDiv;
+	this.aImgUrls = aImgUrls;
+	this.aImgList = [];
+	this.mySwitch = document.createElement("div");
+	this.btnContent = document.createElement("div");
+	this.width="";
+	this.height="";
+
+	this.timer = null;
+	this.nowImg = 0;
+
+	this.config = function(width, height) {
+		this.mySwitch.style.width = width;
+		this.mySwitch.style.height = height;
+		this.mySwitch.style.backgroundColor = "red";
+		this.mySwitch.style.position = "relative";
+
+		this.btnContent.style.width = width;
+		this.btnContent.style.height = "50px";
+		this.btnContent.style.position = "absolute";
+		this.btnContent.style.display="block";
+		this.btnContent.style.backgroundColor="yellow";
+		this.btnContent.style.opacity="0.5";
+
+		this.oDiv.appendChild(this.mySwitch);
+		this.oDiv.appendChild(this.btnContent);
+
+
+
+
+		if ((this.mySwitch.currentStyle.position != "relative") && (this.mySwitch.currentStyle.position != "absolute")) {
+			this.mySwitch.style.position = "relative";
+		}
+
+
+
+		for (var i = 0; i < aImgUrls.length; i++) {
+			//alert(aImgUrls[i]);
+			var img = document.createElement("img");
+			img.src = aImgUrls[i];
+			img.style.width = width;
+			img.style.height = height;
+			img.style.display = "none";
+			this.mySwitch.appendChild(img);
+			this.aImgList.push(img);
+		}
+
+		this.aImgList[this.nowImg].style.display = "block";
+
+		this.timer = setInterval(function() {
+
+			for (var j = 0; j < self.aImgList.length; j++) {
+				self.aImgList[j].style.display = "none";
+			}
+
+			if (self.nowImg != (self.aImgList.length - 1)) {
+				self.nowImg++;
+			} else {
+				self.nowImg = 0;
+			}
+
+			self.aImgList[self.nowImg].style.display = "block";
+
+		}, 3000);
+
+	}
+	
+	this.move = function(position) {//销毁所有的图，把这张图先定位，然后移过去
+		
+		//alert(position+"position");
+		
+		for(var i = 0; i < this.aImgList.length; i++){
+			this.aImgList[i].style.display="none";
+		}
+		
+		this.aImgList[position].style.display="block";
+		this.aImgList[position].style.position="absolute";
+		this.aImgList[position].style.top="0px";
+		this.aImgList[position].style.left="400px";
+		
+		
+
+	}
+	this.addPreNext = function() {
+
+	}
+
+	this.addBtn = function() {
+		
+		var btnArray=[];
+
+
+
+		for (var i = 0; i < aImgUrls.length; i++) {
+			var btn = document.createElement("div");
+			btn.style.width="20px";
+			btn.style.height="20px";
+			btn.style.backgroundColor="green";
+			btn.style.marginTop="10px";
+			btn.style.marginLeft=(400-aImgUrls.length*20)/(aImgUrls.length*2)+"px";
+			btn.style.marginRight=(400-aImgUrls.length*20)/(aImgUrls.length*2)+"px";
+			btn.style.styleFloat="left";
+			btn.index=i;
+			//alert(this.btnContent);
+			this.btnContent.appendChild(btn);
+			btnArray.push(btn);
+		}
+		
+		for(var j=0;j<btnArray.length;j++){
+			
+			
+			btnArray[j].addEventListener("click",function(){
+				
+				
+				for(var k=0;k<btnArray.length;k++){
+					btnArray[k].style.background="green";
+				}
+				
+				
+				btnArray[this.index].style.background="red";
+				//alert(this.index);
+				self.move(this.index);
+				
+				
+				
+				
+				
+			},false);
+			
+		}
+		
+
+	}
+}
+
+
 
 //ClassDialogBase
 var ClassDialogBase = function() {
@@ -9,18 +150,18 @@ var ClassDialogBase = function() {
 	var self = this;
 
 	this.dialogBase = document.createElement("div");
-	this.dialogBase.style.width ="350px";
+	this.dialogBase.style.width = "350px";
 	this.dialogBase.style.height = "200px";
 	this.dialogBase.style.backgroundColor = "#DDD";
 	this.dialogBase.style.borderRadius = "10px";
 	this.dialogBase.style.position = "absolute";
 	this.dialogBase.style.zIndex = "100";
-	this.dialogBase.style.left=(new ClassScreenTool().getNowWidth()-350)/2+"px";
+	this.dialogBase.style.left = (new ClassScreenTool().getNowWidth() - 350) / 2 + "px";
 
 	this.show = function() {
 		document.body.appendChild(this.dialogBase);
 	}
-	
+
 	this.hide = function() {
 		document.body.removeChild(this.dialogBase);
 	}
@@ -41,26 +182,26 @@ var ClassDialogPrompt = function() {
 	this.trueBtn = document.createElement("input");
 	this.trueBtn.type = "button";
 	this.trueBtn.value = "Yes";
-	this.trueBtn.style.width ="100px";
+	this.trueBtn.style.width = "100px";
 	this.trueBtn.style.height = "50px";
-	this.trueBtn.style.border ="none";
+	this.trueBtn.style.border = "none";
 	this.trueBtn.style.backgroundColor = "#CCC";
 	this.trueBtn.style.borderRadius = "5px";
 	this.trueBtn.style.position = "absolute";
-	this.trueBtn.style.left="50px";
-	this.trueBtn.style.top="140px";
+	this.trueBtn.style.left = "50px";
+	this.trueBtn.style.top = "140px";
 
 	this.falseBtn = document.createElement("input");
 	this.falseBtn.type = "button";
 	this.falseBtn.value = "No";
-	this.falseBtn.style.width ="100px";
-	this.falseBtn.style.border ="none";
+	this.falseBtn.style.width = "100px";
+	this.falseBtn.style.border = "none";
 	this.falseBtn.style.height = "50px";
 	this.falseBtn.style.backgroundColor = "#CCC";
 	this.falseBtn.style.borderRadius = "5px";
 	this.falseBtn.style.position = "absolute";
-	this.falseBtn.style.left="200px";
-	this.falseBtn.style.top="140px";
+	this.falseBtn.style.left = "200px";
+	this.falseBtn.style.top = "140px";
 
 	this.dialogBase.appendChild(this.trueBtn);
 	this.dialogBase.appendChild(this.falseBtn);
@@ -79,81 +220,81 @@ var ClassDialogPrompt = function() {
 
 }
 
-var ClassDialogFile=function(){
-	
+var ClassDialogFile = function() {
+
 	var self = this;
 
 	this.temp = ClassDialogPrompt;
 	this.temp();
 	delete this.temp;
-	
+
 	this.fileInput = document.createElement("input");
 	this.fileInput.type = "file";
-	this.fileInput.style.width ="300px";
+	this.fileInput.style.width = "300px";
 	this.fileInput.style.height = "30px";
 	this.fileInput.style.backgroundColor = "#CCC";
 	this.fileInput.style.position = "absolute";
-	this.fileInput.style.left="25px";
-	this.fileInput.style.top="60px";
-	
+	this.fileInput.style.left = "25px";
+	this.fileInput.style.top = "60px";
+
 	this.dialogBase.appendChild(this.fileInput);
-	
-	
-	
+
+
+
 }
 
 var ClassPainter = function(canvasId) {
 
-				this.context = document.getElementById(canvasId).getContext("2d");
+	this.context = document.getElementById(canvasId).getContext("2d");
 
-				this.sector = function(x, y, radius, sDeg, eDeg, color) {
+	this.sector = function(x, y, radius, sDeg, eDeg, color) {
 
-					var sDeg = Math.PI / 180 * sDeg;
-					var eDeg = Math.PI / 180 * eDeg;
+		var sDeg = Math.PI / 180 * sDeg;
+		var eDeg = Math.PI / 180 * eDeg;
 
-					// 保存
-					this.context.save();
+		// 保存
+		this.context.save();
 
-					// 位移到目标点.
-					this.context.translate(x, y);
-					this.context.beginPath();
+		// 位移到目标点.
+		this.context.translate(x, y);
+		this.context.beginPath();
 
-					// 画出圆弧
-					this.context.arc(0, 0, radius, sDeg, eDeg);
+		// 画出圆弧
+		this.context.arc(0, 0, radius, sDeg, eDeg);
 
-					// 再次保存以备旋转
-					this.context.save();
+		// 再次保存以备旋转
+		this.context.save();
 
-					// 旋转至起始角度
-					this.context.rotate(eDeg);
+		// 旋转至起始角度
+		this.context.rotate(eDeg);
 
-					// 移动到终点，准备连接终点与圆心
-					this.context.moveTo(radius, 0);
+		// 移动到终点，准备连接终点与圆心
+		this.context.moveTo(radius, 0);
 
-					// 连接到圆心
-					this.context.lineTo(0, 0);
+		// 连接到圆心
+		this.context.lineTo(0, 0);
 
-					// 还原
-					this.context.restore();
+		// 还原
+		this.context.restore();
 
-					// 旋转至起点角度
-					this.context.rotate(sDeg);
+		// 旋转至起点角度
+		this.context.rotate(sDeg);
 
-					// 从圆心连接到起点
-					this.context.lineTo(radius, 0);
-					this.context.closePath();
+		// 从圆心连接到起点
+		this.context.lineTo(radius, 0);
+		this.context.closePath();
 
-					// 还原到最初保存的状态
-					this.context.restore();
+		// 还原到最初保存的状态
+		this.context.restore();
 
-					this.context.fillStyle = color;
-					this.context.fill();
-				}
-
-
+		this.context.fillStyle = color;
+		this.context.fill();
+	}
 
 
-			}
+
+
+}
 
 //Class RequireTool
 var ClassRequireTool = function() {
@@ -206,6 +347,17 @@ var ClassAnimationTool = function() {
 			}
 
 		}, 50);
+	}
+	this.move = function(oDiv, sProperty, sValue, iTime, iStep) {
+
+		//oDiv.style.sProperty
+
+		//定时器
+
+		var timer = setInterval(function() {
+			//这里渐变，并且需要缓冲运动
+		}, iTime / iStep);
+
 	}
 }
 

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../LeiquanLibrary.js"></script>
+	</head>
+	<body>
+		
+		
+		
+		<div id="mySwitch"></div>
+		
+		<script>
+			window.onload=function(){
+				var mySwitch=document.getElementById("mySwitch");
+				
+				
+				var imgUrls=["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg"];
+				
+				var switchTool=new ClassSwitchTool(mySwitch,imgUrls);
+				switchTool.config("400px","300px");
+				switchTool.addBtn();
+				
+			}
+		</script>
+		
+		
+	</body>
+</html>
