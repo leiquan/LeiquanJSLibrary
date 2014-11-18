@@ -3,143 +3,153 @@
 //You Should Use These Method After Create A New Object By These Classes!
 
 //ClassSwitchTool
-var ClassSwitchTool = function(oDiv, aImgUrls) {
+var ClassSwitchTool = function(oSwitchBox, aImgUrls) {
 
 	var self = this;
 
-	this.oDiv = oDiv;
-	this.aImgUrls = aImgUrls;
-	this.aImgList = [];
-	this.mySwitch = document.createElement("div");
-	this.btnContent = document.createElement("div");
-	this.width="";
-	this.height="";
-
-	this.timer = null;
+	this.switchBox = oSwitchBox;
+	this.imgUrls = aImgUrls;
+	this.imgList = [];
+	this.btnList=[];
 	this.nowImg = 0;
 
-	this.config = function(width, height) {
-		this.mySwitch.style.width = width;
-		this.mySwitch.style.height = height;
-		this.mySwitch.style.backgroundColor = "red";
-		this.mySwitch.style.position = "relative";
+	this.width = "500px";
+	this.height = "300px";
+	//this.backgroundColor="red";
 
-		this.btnContent.style.width = width;
-		this.btnContent.style.height = "50px";
-		this.btnContent.style.position = "absolute";
-		this.btnContent.style.display="block";
-		this.btnContent.style.backgroundColor="yellow";
-		this.btnContent.style.opacity="0.5";
-
-		this.oDiv.appendChild(this.mySwitch);
-		this.oDiv.appendChild(this.btnContent);
-
-
-
-
-		if ((this.mySwitch.currentStyle.position != "relative") && (this.mySwitch.currentStyle.position != "absolute")) {
-			this.mySwitch.style.position = "relative";
-		}
-
-
+	this.init = function() {
+		this.switchBox.style.width = this.width;
+		this.switchBox.style.height = this.height;
+		this.switchBox.style.backgroundColor = this.backgroundColor;
+		this.switchBox.style.position = "relative";
+		this.switchBox.style.overflow = "hidden";
 
 		for (var i = 0; i < aImgUrls.length; i++) {
-			//alert(aImgUrls[i]);
-			var img = document.createElement("img");
-			img.src = aImgUrls[i];
-			img.style.width = width;
-			img.style.height = height;
+			var img = new Image();
+			img.src = this.imgUrls[i];
+			img.style.position = "absolute";
 			img.style.display = "none";
-			this.mySwitch.appendChild(img);
-			this.aImgList.push(img);
+			img.style.top = "0px";
+			img.style.left = "0px";
+			img.style.width = this.width;
+			img.style.height = this.height;
+			this.imgList.push(img);
+			this.switchBox.appendChild(this.imgList[i]);
+		}
+		this.imgList[0].style.display = "block";
+		var j = 0;
+		//setInterval(function() {}, 3000);
+
+	}
+	this.init();
+
+	this.move = function(target) {
+		
+		//alert(target);
+
+
+//准备图片
+		if (target == self.imgList.length) {
+			this.imgList[0].style.left = "500px";
+			this.imgList[0].style.display = "block";
+		} else {
+			//备滑图片
+			this.imgList[target].style.left = "500px";
+			this.imgList[target].style.display = "block";
 		}
 
-		this.aImgList[this.nowImg].style.display = "block";
 
-		this.timer = setInterval(function() {
 
-			for (var j = 0; j < self.aImgList.length; j++) {
-				self.aImgList[j].style.display = "none";
-			}
-
-			if (self.nowImg != (self.aImgList.length - 1)) {
-				self.nowImg++;
+		var timer = setInterval(function() {
+			if (self.imgList[self.nowImg].style.left == "-500px") {
+				console.log("滑动到头，停止");
+				
+				window.clearInterval(timer);
+				self.imgList[self.nowImg].style.display = "none";
+				self.nowImg = target;
+				
 			} else {
-				self.nowImg = 0;
+				
+				//清空按钮色
+					for(var i=0;i<self.btnList.length;i++){
+						self.btnList[i].style.backgroundColor="green";
+					}
+					self.btnList[target].style.backgroundColor="yellow";
+				
+				//移动自身
+				self.imgList[self.nowImg].style.left = (self.imgList[self.nowImg].offsetLeft - 10) + "px";
+				//console.log("将要移走第"+(self.nowImg+1)+"个图片");
+				//移动目标
+				if (self.nowImg == self.imgList.length) {
+					self.imgList[0].style.left = (self.imgList[0].offsetLeft - 10) + "px";
+				} else {
+					self.imgList[target].style.left = (self.imgList[target].offsetLeft - 10) + "px";
+				}
+
 			}
 
-			self.aImgList[self.nowImg].style.display = "block";
+		}, 20);
 
-		}, 3000);
-
-	}
-	
-	this.move = function(position) {//销毁所有的图，把这张图先定位，然后移过去
-		
-		//alert(position+"position");
-		
-		for(var i = 0; i < this.aImgList.length; i++){
-			this.aImgList[i].style.display="none";
-		}
-		
-		this.aImgList[position].style.display="block";
-		this.aImgList[position].style.position="absolute";
-		this.aImgList[position].style.top="0px";
-		this.aImgList[position].style.left="400px";
 		
 		
-
-	}
-	this.addPreNext = function() {
-
+		
+		console.log("正在播放"+this.nowImg+"，这里是从0开始");
 	}
 
 	this.addBtn = function() {
-		
-		var btnArray=[];
+			var btnContent = document.createElement("div");
+			btnContent.style.width = this.width;
+			btnContent.style.height = "50px";
+			btnContent.style.position = "absolute";
+			btnContent.style.top = "250px";
+			btnContent.style.opacity = "0.5";
+			btnContent.style.backgroundColor = "red";
 
+			this.switchBox.appendChild(btnContent);
 
+			for (var i = 0; i < this.imgList.length; i++) {
+				var btn = document.createElement("div");
+				btn.style.width = "20px";
+				btn.style.height = "20px";
+				btn.style.backgroundColor = "green";
+				btn.style.styleFloat = "left";
+				btn.style.cursor = "pointer";
+				btn.style.margin = "15px 10px";
+				btn.index = i;
+				btn.className = "switchBtn";
+				btnContent.appendChild(btn)
+				this.btnList.push(btn);
+			}
 
-		for (var i = 0; i < aImgUrls.length; i++) {
-			var btn = document.createElement("div");
-			btn.style.width="20px";
-			btn.style.height="20px";
-			btn.style.backgroundColor="green";
-			btn.style.marginTop="10px";
-			btn.style.marginLeft=(400-aImgUrls.length*20)/(aImgUrls.length*2)+"px";
-			btn.style.marginRight=(400-aImgUrls.length*20)/(aImgUrls.length*2)+"px";
-			btn.style.styleFloat="left";
-			btn.index=i;
-			//alert(this.btnContent);
-			this.btnContent.appendChild(btn);
-			btnArray.push(btn);
-		}
-		
-		for(var j=0;j<btnArray.length;j++){
-			
-			
-			btnArray[j].addEventListener("click",function(){
+			btnContent.addEventListener("click", function(e) {
+				
+				if(self.imgList[self.nowImg].offsetLeft%500==0){
+					
 				
 				
-				for(var k=0;k<btnArray.length;k++){
-					btnArray[k].style.background="green";
+				
+				if(e.target.className=="switchBtn"){
+				
+				if(e.target.index!=self.nowImg){
+					
+					
+					
+					self.move(e.target.index);
+					//alert(self.btnList[e.target.index]);
+					
 				}
 				
+				}
 				
-				btnArray[this.index].style.background="red";
-				//alert(this.index);
-				self.move(this.index);
+				}
 				
-				
-				
-				
-				
-			},false);
-			
-		}
-		
+			}, false);
 
-	}
+
+		}
+		//this.move(3);
+
+
 }
 
 
