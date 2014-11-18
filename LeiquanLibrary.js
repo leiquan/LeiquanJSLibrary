@@ -37,6 +37,9 @@ var ClassSwitchTool = function(oSwitchBox, aImgUrls) {
 			this.switchBox.appendChild(this.imgList[i]);
 		}
 		this.imgList[0].style.display = "block";
+		
+		//self.btnList[0].style.backgroundColor = "yellow";
+		
 		var j = 0;
 		//setInterval(function() {}, 3000);
 
@@ -45,10 +48,6 @@ var ClassSwitchTool = function(oSwitchBox, aImgUrls) {
 
 	this.move = function(target) {
 		
-		//alert(target);
-
-
-//准备图片
 		if (target == self.imgList.length) {
 			this.imgList[0].style.left = "500px";
 			this.imgList[0].style.display = "block";
@@ -106,8 +105,12 @@ var ClassSwitchTool = function(oSwitchBox, aImgUrls) {
 			btnContent.style.backgroundColor = "red";
 
 			this.switchBox.appendChild(btnContent);
+			
+			//alert(this.imgList.length+"长度");
 
 			for (var i = 0; i < this.imgList.length; i++) {
+				
+				
 				var btn = document.createElement("div");
 				btn.style.width = "20px";
 				btn.style.height = "20px";
@@ -117,9 +120,13 @@ var ClassSwitchTool = function(oSwitchBox, aImgUrls) {
 				btn.style.margin = "15px 10px";
 				btn.index = i;
 				btn.className = "switchBtn";
-				btnContent.appendChild(btn)
 				this.btnList.push(btn);
+				
+				btnContent.appendChild(btn);
+				
 			}
+			
+			this.btnList[0].style.backgroundColor="yellow";
 
 			btnContent.addEventListener("click", function(e) {
 				
@@ -147,8 +154,10 @@ var ClassSwitchTool = function(oSwitchBox, aImgUrls) {
 
 
 		}
-		//this.move(3);
-
+		
+	this.autoPlay=function(){
+		
+	}
 
 }
 
