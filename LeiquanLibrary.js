@@ -7,15 +7,21 @@ var ClassSwitchTool = function(oSwitchBox, aImgUrls) {
 
 	var self = this;
 
+	this.autoPlayFlag = false;
+	this.btnFlag = false;
+	this.preNextFlag = false;
+
 	this.switchBox = oSwitchBox;
 	this.imgUrls = aImgUrls;
 	this.imgList = [];
-	this.btnList=[];
+	this.btnList = [];
 	this.nowImg = 0;
+	this.timer = null;
+	this.moveCallback = null;
+
 
 	this.width = "500px";
 	this.height = "300px";
-	//this.backgroundColor="red";
 
 	this.init = function() {
 		this.switchBox.style.width = this.width;
@@ -37,126 +43,172 @@ var ClassSwitchTool = function(oSwitchBox, aImgUrls) {
 			this.switchBox.appendChild(this.imgList[i]);
 		}
 		this.imgList[0].style.display = "block";
-		
-		//self.btnList[0].style.backgroundColor = "yellow";
-		
-		var j = 0;
-		//setInterval(function() {}, 3000);
 
 	}
 	this.init();
 
 	this.move = function(target) {
-		
-		if (target == self.imgList.length) {
-			this.imgList[0].style.left = "500px";
-			this.imgList[0].style.display = "block";
-		} else {
-			//备滑图片
-			this.imgList[target].style.left = "500px";
-			this.imgList[target].style.display = "block";
-		}
 
+		console.log("目前图片" + self.nowImg + "目标图片" + target);
 
+		clearInterval(self.timer);
+
+		this.imgList[target].style.left = "500px";
+		this.imgList[target].style.display = "block";
 
 		var timer = setInterval(function() {
 			if (self.imgList[self.nowImg].style.left == "-500px") {
 				console.log("滑动到头，停止");
-				
-				window.clearInterval(timer);
+				clearInterval(timer);
 				self.imgList[self.nowImg].style.display = "none";
 				self.nowImg = target;
-				
+				self.timer = setInterval(self.moveCallback, 3000);
+				//alert("恢复");
 			} else {
-				
-				//清空按钮色
-					for(var i=0;i<self.btnList.length;i++){
-						self.btnList[i].style.backgroundColor="green";
+
+				if (self.btnFlag == true) {
+					//清空按钮色
+					for (var i = 0; i < self.btnList.length; i++) {
+						self.btnList[i].style.backgroundColor = "green";
 					}
-					self.btnList[target].style.backgroundColor="yellow";
-				
-				//移动自身
-				self.imgList[self.nowImg].style.left = (self.imgList[self.nowImg].offsetLeft - 10) + "px";
-				//console.log("将要移走第"+(self.nowImg+1)+"个图片");
-				//移动目标
-				if (self.nowImg == self.imgList.length) {
-					self.imgList[0].style.left = (self.imgList[0].offsetLeft - 10) + "px";
-				} else {
-					self.imgList[target].style.left = (self.imgList[target].offsetLeft - 10) + "px";
+					self.btnList[target].style.backgroundColor = "yellow";
 				}
 
+				//移动自身
+				self.imgList[self.nowImg].style.left = (self.imgList[self.nowImg].offsetLeft - 10) + "px";
+				//移动目标
+				self.imgList[target].style.left = (self.imgList[target].offsetLeft - 10) + "px";
 			}
-
 		}, 20);
 
-		
-		
-		
-		console.log("正在播放"+this.nowImg+"，这里是从0开始");
+		console.log("正在播放" + this.nowImg + "，这里是从0开始");
+	}
+
+	this.addPreNext = function(width, height, imgPre, imgNext) {
+
+		var pre = null;
+		var next = null;
+
+		if (imgPre != null && imgNext != null) {
+			pre = document.createElement("img");
+			pre.style.width = width;
+			pre.style.height = height;
+
+			pre.src = imgPre;
+
+			next = document.createElement("img");
+			next.style.width = width;
+			next.style.height = height;
+
+			next.src = imgNext;
+		} else {
+			pre = document.createElement("div");
+			pre.style.width = width;
+			pre.style.height = height;
+			pre.style.backgroundColor = "red";
+
+			next = document.createElement("div");
+			next.style.width = width;
+			next.style.height = height;
+			next.style.backgroundColor = "red";
+
+		}
+		pre.style.position = "absolute";
+		pre.style.left = "50px";
+		next.style.position = "absolute";
+		next.style.right = "50px";
+		this.switchBox.appendChild(pre);
+		this.switchBox.appendChild(next);
+		pre.addEventListener("click", function() {
+			
+			if(self.nowImg!=0){
+				self.move(self.nowImg - 1);
+			}else{
+					self.move(self.imgList.length-1);
+			}
+
+			
+		}, false);
+		next.addEventListener("click", function() {
+			if(self.nowImg!=(self.imgList.length-1)){
+				self.move(self.nowImg +1);
+			}else{
+					self.move(0);
+			}
+		}, false);
+
+
+
 	}
 
 	this.addBtn = function() {
-			var btnContent = document.createElement("div");
-			btnContent.style.width = this.width;
-			btnContent.style.height = "50px";
-			btnContent.style.position = "absolute";
-			btnContent.style.top = "250px";
-			btnContent.style.opacity = "0.5";
-			btnContent.style.backgroundColor = "red";
+		this.btnFlag = true;
 
-			this.switchBox.appendChild(btnContent);
-			
-			//alert(this.imgList.length+"长度");
+		var btnContent = document.createElement("div");
+		btnContent.style.width = this.width;
+		btnContent.style.height = "50px";
+		btnContent.style.position = "absolute";
+		btnContent.style.top = "250px";
+		btnContent.style.opacity = "0.5";
+		btnContent.style.backgroundColor = "red";
 
-			for (var i = 0; i < this.imgList.length; i++) {
-				
-				
-				var btn = document.createElement("div");
-				btn.style.width = "20px";
-				btn.style.height = "20px";
-				btn.style.backgroundColor = "green";
-				btn.style.styleFloat = "left";
-				btn.style.cursor = "pointer";
-				btn.style.margin = "15px 10px";
-				btn.index = i;
-				btn.className = "switchBtn";
-				this.btnList.push(btn);
-				
-				btnContent.appendChild(btn);
-				
-			}
-			
-			this.btnList[0].style.backgroundColor="yellow";
+		this.switchBox.appendChild(btnContent);
 
-			btnContent.addEventListener("click", function(e) {
-				
-				if(self.imgList[self.nowImg].offsetLeft%500==0){
-					
-				
-				
-				
-				if(e.target.className=="switchBtn"){
-				
-				if(e.target.index!=self.nowImg){
-					
-					
-					
-					self.move(e.target.index);
-					//alert(self.btnList[e.target.index]);
-					
-				}
-				
-				}
-				
-				}
-				
-			}, false);
+		for (var i = 0; i < this.imgList.length; i++) {
 
+			var btn = document.createElement("div");
+			btn.style.width = "20px";
+			btn.style.height = "20px";
+			btn.style.backgroundColor = "green";
+			btn.style.styleFloat = "left";
+			btn.style.cursor = "pointer";
+			btn.style.margin = "15px 10px";
+			btn.index = i;
+			btn.className = "switchBtn";
+			this.btnList.push(btn);
+
+			btnContent.appendChild(btn);
 
 		}
-		
-	this.autoPlay=function(){
-		
+
+		this.btnList[0].style.backgroundColor = "yellow";
+
+		btnContent.addEventListener("click", function(e) {
+
+			if (self.imgList[self.nowImg].offsetLeft % 500 == 0) {
+
+				if (e.target.className == "switchBtn") {
+
+					if (e.target.index != self.nowImg) {
+
+						//clearInterval(self.timer);
+
+						self.move(e.target.index);
+					}
+
+				}
+
+			}
+
+		}, false);
+
+
+	}
+
+	this.autoPlay = function() {
+		this.autoPlayFlag = true;
+
+		this.moveCallback = function() {
+
+			if (self.nowImg == (self.imgList.length - 1)) {
+				self.move(0);
+			} else {
+				self.move(self.nowImg + 1);
+			}
+
+		}
+
+		self.timer = setInterval(self.moveCallback, 3000);
 	}
 
 }
