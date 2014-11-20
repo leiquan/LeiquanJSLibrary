@@ -4,12 +4,10 @@
 
 //ClassSwitchTool
 var ClassSwitchTool = function(oSwitchBox, aImgUrls) {
-
+	
 	var self = this;
 
-	this.autoPlayFlag = false;
-	this.btnFlag = false;
-	this.preNextFlag = false;
+	
 
 	this.switchBox = oSwitchBox;
 	this.imgUrls = aImgUrls;
@@ -18,6 +16,10 @@ var ClassSwitchTool = function(oSwitchBox, aImgUrls) {
 	this.nowImg = 0;
 	this.timer = null;
 	this.moveCallback = null;
+	
+	this.autoPlayFlag = false;
+	this.btnFlag = false;
+	this.preNextFlag = false;
 
 
 	this.width = "500px";
