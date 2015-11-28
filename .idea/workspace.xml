@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8f5a14d3-55c1-43e3-a17e-fe366333a312" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LeiquanLibrary.js" afterPath="$PROJECT_DIR$/LeiquanLibrary.js" />
-    </list>
+    <list default="true" id="8f5a14d3-55c1-43e3-a17e-fe366333a312" name="Default" comment="" />
     <ignored path="LeiquanJSLibrary.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -238,12 +235,12 @@
       <option name="number" value="Default" />
       <updated>1447749348671</updated>
       <workItem from="1447749350055" duration="668000" />
-      <workItem from="1448725829251" duration="62000" />
+      <workItem from="1448725829251" duration="210000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="730000" />
+    <option name="totallyTimeSpent" value="878000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
