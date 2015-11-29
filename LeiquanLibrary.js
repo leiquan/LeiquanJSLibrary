@@ -2,6 +2,13 @@
 
 //You Should Use These Method After Create A New Object By These Classes!
 
+Array.prototype.remove = function(dx){
+	if(isNaN(dx)||dx>this.length){
+		return false;
+	}
+	this.splice(dx,1);
+}
+
 var debuger = {
 
 	on: true, //开关
