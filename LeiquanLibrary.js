@@ -640,6 +640,7 @@ var ClassScreenTool = function () {
 
 //geolocationTool
 var ClassGeolocationTool = function () {
+
     this.getDistance = function (latitude1, longitude1, latitude2, longitude2) {
         // R is the radius of the earth in kilometers 地球半径
         var R = 6371;
